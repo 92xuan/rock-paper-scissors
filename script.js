@@ -3,8 +3,13 @@
 let computerChoice, humanChoice;
 let humanScore = 0;
 let computerScore = 0;
+let gameRunning = true;
 
-playGame(5)
+const scoreDisplay = document.querySelector(".scoreDisplay")
+const roundDisplay = document.querySelector(".roundDisplay")
+const winnerDisplay = document.querySelector(".winnerDisplay")
+
+// playGame(1)
 
 function getComputerChoice () {
     let choiceNum = Math.random();
@@ -26,35 +31,58 @@ function getHumanChoice () {
 function playRound (computerChoice, humanChoice) {
     humanChoice = humanChoice.toLowerCase();
     if (computerChoice === humanChoice) {
-        console.log ("It's a tie!")
+        roundDisplay.textContent = "It's a tie!"
     }
     else if ((computerChoice === "rock" && humanChoice === "paper") || 
             (computerChoice === "paper" && humanChoice === "scissors") ||
             (computerChoice === "scissors" && humanChoice === "rock")) {
-                console.log (`You win! ${humanChoice} beats ${computerChoice}!`)
+                roundDisplay.textContent = `You win! ${humanChoice} beats ${computerChoice}!`
                 ++humanScore;
             }
     else {
-        console.log (`You lose! ${computerChoice} beats ${humanChoice}!`)
+        roundDisplay.textContent = `You lose! ${computerChoice} beats ${humanChoice}!`
         ++computerScore
     }
-
+    scoreDisplay.textContent = `SCORE: Human ${humanScore}, Computer ${computerScore}`
+    if (humanScore == 5) {
+        winnerDisplay.textContent = "YOU WIN!"
+        gameEnd()
+    } else if  (computerScore == 5) {
+        winnerDisplay.textContent = "YOU LOSE! BETTER LUCK NEXT TIME!"
+        gameEnd()
+    }
 }
 
-function playGame (numOfRounds) {
-    for (i = 0; i < numOfRounds; ++i) {
+const gameEnd = () => {
+    gameRunning = false
+    const resetButton = document.createElement("button")
+    resetButton.textContent = "Play again"
+    resetButton.addEventListener('click', gameReset)
+    winnerDisplay.appendChild(resetButton)
+}
+
+const gameReset = () => {
+    gameRunning = true
+    humanScore = 0
+    computerScore = 0
+    scoreDisplay.textContent = ""
+    roundDisplay.textContent = ""
+    winnerDisplay.textContent = ""
+}
+
+const buttonsDiv = document.querySelector(".buttonsDiv")
+buttonsDiv.addEventListener('click', (event) => {
+    if (gameRunning) {
+    let buttonClicked = event.target
+        switch (buttonClicked.className) {
+            case "rockBtn":
+                humanChoice = "rock"
+            case "scissorsBtn":
+                humanChoice = "scissors"
+            case "paperBtn":
+                humanChoice = "paper"
+        }
         getComputerChoice ()
-        getHumanChoice ()
-        playRound (computerChoice, humanChoice)
-        console.log (`Scores: Human ${humanScore}, Computer ${computerScore}`)
+        playRound(computerChoice, humanChoice)
     }
-    if (humanScore > computerScore) {
-        console.log("Human wins!")
-    }
-    else if (computerScore > humanScore) {
-        console.log("Computer wins!")
-    }
-    else {
-        console.log("It's a tie!")
-    }
-}
+})

@@ -1,0 +1,51 @@
+:root {
+    --background-color: rgb(216, 177, 79);
+    --highlight-color: rgb(220, 144, 30)
+}
+
+html {
+    background-color: var(--background-color);
+}
+
+.titleDiv {
+    background-color: var(--highlight-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 4px;
+    border-style: solid;
+    padding: 16px;
+    font-size: x-large;
+
+}
+
+.buttonsTitle {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    font-size: 24px;
+}
+.buttonsDiv {
+    display: flex;
+    justify-content: space-around;
+}
+
+.rockBtn, .scissorsBtn, .paperBtn {
+    display: flex;
+    font-size: 64px;
+    width: 140px;
+    height: 140px;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--highlight-color);
+}
+
+.scoreDisplay, .roundDisplay, .winnerDisplay {
+    display: flex;
+    font-size: 24px;
+    justify-content: center;
+    align-items: center;
+    padding: 16px
+}
+
